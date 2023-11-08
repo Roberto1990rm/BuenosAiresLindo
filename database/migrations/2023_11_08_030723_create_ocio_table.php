@@ -4,22 +4,24 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOcioTable extends Migration
+return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
         Schema::create('ocio', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->text('descripcion');
-            $table->binary('imagen')->nullable(); // Usamos 'binary' para almacenar la imagen
             $table->timestamps();
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('ocio');
     }
-}
-
+};
