@@ -1,6 +1,4 @@
 <x-layout>
-
-
     <div class="container mt-4">
         <h1>Crear Barrio</h1>
         <form method="POST" action="{{ route('barrios.store') }}" enctype="multipart/form-data">
