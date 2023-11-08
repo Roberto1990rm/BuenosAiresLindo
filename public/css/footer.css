@@ -1,0 +1,44 @@
+.footer {
+    background-color: rgba(125, 113, 113, 0.7); /* Fondo con opacidad (0.9) */
+    color: #fff; /* Color del texto del footer */
+    padding: 20px; /* Ajusta según tus necesidades */
+}
+
+.footer h4 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer ul li {
+    margin-bottom: 10px;
+}
+
+
+.social-icons {
+    list-style: none;
+    padding: 0;
+}
+
+.social-icons li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.social-icons a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+}
+
+.colorWhite{
+    color: rgb(247, 249, 230);
+}
+
+.colorWhite:hover {
+    color: #ff0000; /* Cambia el color a rojo al pasar el mouse por encima */
+}
