@@ -81,20 +81,20 @@
 
             <div class="row mt-4">
                 @foreach ($barrios as $barrio)
-                    <div class="col-md-4">
-                        <div class="card w-50" style="cursor: pointer; transition: background-color 0.2s; background: rgba(0, 0, 0, 0.7);">
-                            @if ($barrio->img && Storage::disk('public')->exists($barrio->img))
-                            <img src="{{ url('storage/' . $barrio->img) }}" class="card-img-top" alt="{{ $barrio->title }}">
-                            @else
+                <div class="col-md-4">
+                    <div class="card w-100" style="cursor: pointer; transition: background-color 0.2s; background: rgba(0, 0, 0, 0.7);">
+                        @if ($barrio->img && Storage::disk('public')->exists($barrio->img))
+                            <img style="height: auto;" src="{{ url('storage/' . $barrio->img) }}" class="card-img-top" alt="{{ $barrio->title }}">
+                        @else
                             <img src="{{ asset('img/default.jpg') }}" class="card-img-top" alt="{{ $barrio->title }}">
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title" style="color: #fff;">{{ $barrio->title }}</h5>
-                                <p class="card-text" style="color: #fff;">{{ $barrio->body }}</p>
-                                <a href="#" class="btn btn-primary">Ver Detalles</a>
-                            </div>
-
-                            @if (auth()->check() && auth()->user()->admin == 1)
+                        @endif
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #fff;">{{ $barrio->title }}</h5>
+                            <p class="card-text" style="color: #fff;">{{ Str::limit($barrio->body, 80, '...') }}</p> <!-- Aquí se hace el cambio -->
+                            <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        </div>
+            
+                        @if (auth()->check() && auth()->user()->admin == 1)
                             <div class="text-center mb-2">
                                 <form action="{{ route('barrios.delete', ['id' => $barrio->id]) }}" method="POST">
                                     @csrf
@@ -106,6 +106,7 @@
                     </div>
                 </div>
             @endforeach
+            
         </div>
     </div>
 </x-layout>

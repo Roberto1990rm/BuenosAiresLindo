@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Barrio;
+use App\Models\Bar;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -24,7 +25,7 @@ public function store(Request $request)
     // Validar los datos del formulario
     $validatedData = $request->validate([
         'title' => 'required|string|max:255',
-        'body' => 'required|string',
+        'body' => 'required|max:2000',
         'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Valida y permite imágenes (ajusta los formatos y el tamaño según tus necesidades)
         'latitude' => 'nullable|numeric', // Valida como número (ajusta las reglas según tus necesidades)
         'longitude' => 'nullable|numeric', // Valida como número (ajusta las reglas según tus necesidades)
@@ -50,11 +51,18 @@ public function store(Request $request)
 public function delete($id)
 {
     // Encuentra el barrio por su ID
-    $barrio = Barrio::find($id);
+    $barrio = Barrio::with('bares')->find($id);
 
-    // Si el barrio no se encuentra, redirige con un mensaje de error o realiza cualquier otra acción según tus necesidades.
+    // Si el barrio no se encuentra, redirige con un mensaje de error
     if (!$barrio) {
         return redirect('/')->with('error', 'Barrio no encontrado');
+    }
+
+    // Elimina primero los registros dependientes en la tabla bares
+    if ($barrio->bares) {
+        foreach ($barrio->bares as $bar) {
+            $bar->delete();
+        }
     }
 
     // Elimina la imagen asociada si existe
@@ -65,9 +73,10 @@ public function delete($id)
     // Elimina el barrio de la base de datos
     $barrio->delete();
 
-    // Redirige a la página de inicio o a donde desees después de eliminar
     return redirect('/')->with('success', 'Barrio eliminado correctamente');
 }
+
+
 
 
 
