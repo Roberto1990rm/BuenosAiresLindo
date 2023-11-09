@@ -7,9 +7,10 @@
                 <label for="title" class="form-label">Título del Barrio</label>
                 <input type="text" class="form-control" id="title" name="title" required>
             </div>
+            
             <div class="mb-3">
                 <label for="body" class="form-label">Descripción</label>
-                <textarea class="form-control" id="body" name="body" required></textarea>
+                <textarea class="form-control" id="body" name="body" rows="3" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="img" class="form-label">Imagen</label>
