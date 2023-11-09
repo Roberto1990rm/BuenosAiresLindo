@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(135deg, #24292E, #3A3F44);">
     <div class="container">
         <a class="navbar-brand" href="{{ route('welcome') }}" style="color: #61DAFB; font-size: 28px; font-weight: bold; font-family: fantasy;">
-            Buenos Aires <i style="color: yellow;">Lindo</i>
+            Buenos Aires <i style="color:white;">Lindo</i>
         </a>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border: 1px solid #61DAFB; background: #61DAFB;">
