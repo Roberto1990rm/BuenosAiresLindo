@@ -18,3 +18,4 @@ class Barrio extends Model
     return $this->hasMany(Bar::class, 'barrio_id');
 }
 }
+
