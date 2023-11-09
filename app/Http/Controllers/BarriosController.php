@@ -25,7 +25,7 @@ public function store(Request $request)
     // Validar los datos del formulario
     $validatedData = $request->validate([
         'title' => 'required|string|max:255',
-        'body' => 'required|max:2000',
+        'body' => 'required|string|max:2555',
         'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Valida y permite imágenes (ajusta los formatos y el tamaño según tus necesidades)
         'latitude' => 'nullable|numeric', // Valida como número (ajusta las reglas según tus necesidades)
         'longitude' => 'nullable|numeric', // Valida como número (ajusta las reglas según tus necesidades)
