@@ -4,24 +4,79 @@
             <h1 class="mt-2" style="text-align: center; font-family: 'Arial', 'Helvetica', sans-serif; color: #007BFF; font-size: 38px; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 2px; border: 0.2px solid #ffffff; ">Explora los Barrios</h1>
 
             <div class="main-container">
-                <div class="map-container">
-                    <div id="map" style="width: 100%; height: 400px; border-radius: 10px;"></div>
-                </div>
-                <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
-                <script>
-                    var map = L.map('map').setView([-34.6118, -58.4173], 12);
+                <div id="map" style="width: 100%; height: 400px; border-radius: 10px;"></div>
 
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; OpenStreetMap contributors'
-                    }).addTo(map);
-                    map.setZoom(12);
-                    
+                <script src="https://cdn.jsdelivr.net/npm/ol/ol.js"></script>
+                <script>
+                    var map = new ol.Map({
+                        target: 'map',
+                        layers: [
+                            new ol.layer.Tile({
+                                source: new ol.source.OSM()
+                            })
+                        ],
+                        view: new ol.View({
+                            center: ol.proj.fromLonLat([-58.4173, -34.6118]),
+                            zoom: 12
+                        })
+                    });
+                
+                    // Overlay para el tooltip
+                    var tooltip = document.createElement('div');
+                    tooltip.className = 'ol-tooltip';
+                    tooltip.style.display = 'none'; // Esconder inicialmente el tooltip
+                    var overlay = new ol.Overlay({
+                        element: tooltip,
+                        offset: [15, 0],
+                        positioning: 'bottom-left'
+                    });
+                    map.addOverlay(overlay);
+                
                     @foreach ($barrios as $barrio)
-                        var marker = L.marker([{{ $barrio->latitude }}, {{ $barrio->longitude }}]).addTo(map);
-                        marker.bindPopup("{{ $barrio->title }}"); // Esto agrega una etiqueta emergente con el nombre del barrio
-                        marker.bindTooltip("{{ $barrio->title }}").openTooltip(); // Esto agrega una etiqueta flotante con el nombre del barrio y la abre por defecto
+                        var feature = new ol.Feature({
+                            geometry: new ol.geom.Point(ol.proj.fromLonLat([{{ $barrio->longitude }}, {{ $barrio->latitude }}])),
+                            title: '{{ $barrio->title }}',
+                            body: '{{ Str::limit($barrio->body, 50, '...') }}' // Usando 'body' en lugar de 'description'
+                        });
+                
+                        var vectorSource = new ol.source.Vector({
+                            features: [feature]
+                        });
+                
+                        var markerVectorLayer = new ol.layer.Vector({
+                            source: vectorSource,
+                        });
+                
+                        map.addLayer(markerVectorLayer);
                     @endforeach
+                
+                    // Evento para mostrar el tooltip
+                    map.on('pointermove', function(evt) {
+                        tooltip.style.display = 'none'; // Ocultar el tooltip inicialmente
+                        map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+                            overlay.setPosition(evt.coordinate);
+                            tooltip.innerHTML = feature.get('title') + '<br>' + feature.get('body');
+                            tooltip.style.display = 'block'; // Mostrar el tooltip
+                            return true;
+                        });
+                    });
                 </script>
+                
+                <style>
+                    .ol-tooltip {
+                        background: rgba(255, 255, 255, 0.8);
+                        border: 1px solid black;
+                        padding: 4px 8px;
+                        position: relative;
+                        bottom: 15px;
+                        left: -50%;
+                        min-width: 100px;
+                        text-align: center;
+                        border-radius: 4px;
+                        pointer-events: none; /* Importante para evitar problemas con eventos de mouse */
+                    }
+                </style>
+                
             </div>
 
             <div class="row mt-4">

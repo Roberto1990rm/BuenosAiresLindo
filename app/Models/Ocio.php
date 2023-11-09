@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Ocio extends Model
 {
     protected $table = 'ocio'; // Especifica el nombre de la tabla
-    protected $fillable = ['nombre', 'descripcion', 'imagen']; // Especifica las columnas que se pueden llenar masivamente
+    protected $fillable = ['nombre', 'descripcion', 'imagen',  'latitude', 'longitude',]; // Especifica las columnas que se pueden llenar masivamente
 }
 

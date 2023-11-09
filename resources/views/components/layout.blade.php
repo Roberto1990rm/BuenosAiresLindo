@@ -11,7 +11,20 @@
     <link href="{{ asset('css/globalstyles.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<!-- Incluir CSS de Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/ol/ol.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/openlayers/dist/ol.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/openlayers/dist/ol.js"></script>
+
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <title>{{ $title ?? 'buenosaireslindo.com' }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
