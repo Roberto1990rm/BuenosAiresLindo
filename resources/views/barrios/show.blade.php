@@ -8,7 +8,7 @@
         @if($barrio->latitude && $barrio->longitude)
             <div id="map"></div> <!-- Aquí iría el mapa -->
         @endif
-        <a href="{{ url('/') }}" class="btn btn-secondary mt-3 mb-3">Volver al Inicio</a>
+        <a href="{{ url('/barrios/index') }}" class="btn btn-secondary mt-3 mb-3">Volver a barrios</a>
         <!-- Sección de comentarios o reseñas aquí -->
 
     </div>

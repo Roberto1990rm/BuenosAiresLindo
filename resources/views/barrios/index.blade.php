@@ -24,7 +24,7 @@
                     // Overlay para el tooltip
                     var tooltip = document.createElement('div');
                     tooltip.className = 'ol-tooltip';
-                    tooltip.style.display = 'none'; // Esconder inicialmente el tooltip
+                    tooltip.style.display = 'none';
                     var overlay = new ol.Overlay({
                         element: tooltip,
                         offset: [15, 0],
@@ -32,12 +32,27 @@
                     });
                     map.addOverlay(overlay);
                 
+                    var tooltipTimeout;
+                
                     @foreach ($barrios as $barrio)
                         var feature = new ol.Feature({
                             geometry: new ol.geom.Point(ol.proj.fromLonLat([{{ $barrio->longitude }}, {{ $barrio->latitude }}])),
                             title: '{{ $barrio->title }}',
-                            body: '{{ Str::limit($barrio->body, 50, '...') }}' // Usando 'body' en lugar de 'description'
+                            body: '{{ Str::limit($barrio->body, 50, '...') }}',
+                            id: '{{ $barrio->id }}'
                         });
+                
+                        var starStyle = new ol.style.Style({
+                            image: new ol.style.RegularShape({
+                                fill: new ol.style.Fill({ color: '#ffcc33' }),
+                                stroke: new ol.style.Stroke({ color: '#ff0000', width: 1 }),
+                                points: 5,
+                                radius: 10,
+                                radius2: 4,
+                                angle: 0
+                            })
+                        });
+                        feature.setStyle(starStyle);
                 
                         var vectorSource = new ol.source.Vector({
                             features: [feature]
@@ -50,17 +65,44 @@
                         map.addLayer(markerVectorLayer);
                     @endforeach
                 
-                    // Evento para mostrar el tooltip
-                    map.on('pointermove', function(evt) {
-                        tooltip.style.display = 'none'; // Ocultar el tooltip inicialmente
+                    map.on('singleclick', function(evt) {
                         map.forEachFeatureAtPixel(evt.pixel, function(feature) {
-                            overlay.setPosition(evt.coordinate);
-                            tooltip.innerHTML = feature.get('title') + '<br>' + feature.get('body');
-                            tooltip.style.display = 'block'; // Mostrar el tooltip
-                            return true;
+                            var url = '/barrios/' + feature.get('id');
+                            window.open(url, '_blank');
                         });
                     });
+                
+                    map.on('pointermove', function(evt) {
+                        if (tooltipTimeout) {
+                            clearTimeout(tooltipTimeout);
+                        }
+                
+                        var showTooltip = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+                            overlay.setPosition(evt.coordinate);
+                            tooltip.innerHTML = feature.get('title') + '<br>' + feature.get('body') +
+                                                '<br><span style="text-decoration: underline; cursor: pointer;" onclick="window.open(\'/barrios/' + feature.get('id') + '\', \'_blank\');">para ver más clickea la estrella</span>';
+                            tooltip.style.display = 'block';
+                            return true;
+                        });
+                
+                        if (!showTooltip) {
+                            tooltipTimeout = setTimeout(function() { 
+                                tooltip.style.display = 'none'; 
+                            }, 3000);
+                        }
+                    });
+                
+                    map.on('pointerout', function() {
+                        if (tooltipTimeout) {
+                            clearTimeout(tooltipTimeout);
+                        }
+                        tooltipTimeout = setTimeout(function() { 
+                            tooltip.style.display = 'none'; 
+                        }, 3000);
+                    });
                 </script>
+                
+                
                 
                 <style>
                     .ol-tooltip {
