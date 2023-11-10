@@ -16,6 +16,8 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+<!-- Coloca esto en el <head> o al final del <body> de tu plantilla principal -->
+<script src="https://cdn.tiny.cloud/1/l75m3smh1dz3mwy419v875a4691p4ttba07aiu4zedr1hj68/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css" type="text/css">

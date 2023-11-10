@@ -10,7 +10,24 @@
             
             <div class="mb-3">
                 <label for="body" class="form-label">Descripción</label>
-                <textarea class="form-control" id="body" name="body" rows="3" required></textarea>
+                <textarea class="form-control" id="editor" name="body" rows="3" required></textarea>
+                <script>
+                    // Inicializar TinyMCE
+                    tinymce.init({
+                      selector: '#editor',
+                      // Agrega aquí otras opciones según necesites
+                    });
+                  
+                    document.getElementById('formBarrio').addEventListener('submit', function() {
+    tinymce.triggerSave();
+    console.log(document.getElementById('editor').value); // Debería mostrar el contenido del editor
+});
+;
+
+                    
+                  </script>
+                  
+                    
             </div>
             <div class="mb-3">
                 <label for="img" class="form-label">Imagen</label>

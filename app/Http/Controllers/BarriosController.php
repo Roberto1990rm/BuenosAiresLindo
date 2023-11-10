@@ -22,7 +22,7 @@ class BarriosController extends Controller
 
 public function store(Request $request)
 {
-    // Validar los datos del formulario
+    dd($request->all()); 
     $request->validate([
         'title' => 'required|string',
         'body' => 'required|string',
