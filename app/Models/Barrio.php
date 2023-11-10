@@ -8,8 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Barrio extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['title', 'body', 'img', 'latitude', 'longitude'];
+    protected $fillable = [
+        'title', 
+        'body', 
+        'img', 
+        'latitude', 
+        'longitude',
+        'imagen2', 
+        'imagen3', 
+        'imagen4', 
+        'imagen5' // Añade las nuevas columnas aquí
+    ];
 
 
 

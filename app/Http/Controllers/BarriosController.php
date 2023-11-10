@@ -19,58 +19,63 @@ class BarriosController extends Controller
 }
 
 
-
 public function store(Request $request)
 {
     $request->validate([
         'title' => 'required|string',
         'body' => 'required|string|min:179',
         'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        // Valida las imágenes adicionales
+        'imagen2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'imagen3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'imagen4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'imagen5' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'latitude' => 'nullable|numeric',
         'longitude' => 'nullable|numeric',
     ]);
 
-    // Crear una nueva instancia del modelo Barrio y asignar valores usando input()
     $barrio = new Barrio();
     $barrio->title = $request->input('title');
     $barrio->body = $request->input('body');
-    $barrio->img = $request->hasFile('img') ? $request->file('img')->store('barrios', 'public') : null; // Verifica si hay archivo de imagen y lo almacena
+    $barrio->img = $request->hasFile('img') ? $request->file('img')->store('barrios', 'public') : null;
+
+    // Manejar la subida de las imágenes adicionales
+    $barrio->imagen2 = $request->hasFile('imagen2') ? $request->file('imagen2')->store('barrios', 'public') : null;
+    $barrio->imagen3 = $request->hasFile('imagen3') ? $request->file('imagen3')->store('barrios', 'public') : null;
+    $barrio->imagen4 = $request->hasFile('imagen4') ? $request->file('imagen4')->store('barrios', 'public') : null;
+    $barrio->imagen5 = $request->hasFile('imagen5') ? $request->file('imagen5')->store('barrios', 'public') : null;
+
     $barrio->latitude = $request->input('latitude');
     $barrio->longitude = $request->input('longitude');
-
-    // Guardar el Barrio en la base de datos
     $barrio->save();
 
-    // Redirigir a la página de inicio o a donde desees después de guardar
     return redirect('/')->with('success', 'Barrio creado correctamente');
 }
 
 
 public function delete($id)
 {
-    // Encuentra el barrio por su ID
     $barrio = Barrio::with('bares')->find($id);
 
-    // Si el barrio no se encuentra, redirige con un mensaje de error
     if (!$barrio) {
         return redirect('/')->with('error', 'Barrio no encontrado');
     }
 
-    // Elimina primero los registros dependientes en la tabla bares
     if ($barrio->bares) {
         foreach ($barrio->bares as $bar) {
             $bar->delete();
         }
     }
 
-    // Elimina la imagen asociada si existe
-    if (Storage::disk('public')->exists($barrio->img)) {
-        Storage::disk('public')->delete($barrio->img);
+    // Eliminar la imagen principal y las imágenes adicionales
+    $imageFields = ['img', 'imagen2', 'imagen3', 'imagen4', 'imagen5'];
+    foreach ($imageFields as $fieldName) {
+        if (Storage::disk('public')->exists($barrio->$fieldName)) {
+            Storage::disk('public')->delete($barrio->$fieldName);
+        }
     }
 
-    // Elimina el barrio de la base de datos
     $barrio->delete();
-
     return redirect('/')->with('success', 'Barrio eliminado correctamente');
 }
 
