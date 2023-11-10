@@ -124,7 +124,7 @@
             <div class="row mt-4">
                 @foreach ($barrios as $barrio)
                 <div class="col-md-4">
-                    <div class="card w-100" style="cursor: pointer; transition: background-color 0.2s; background: rgba(0, 0, 0, 0.7);">
+                    <div class="card w-100 mt-1" style="cursor: pointer; transition: background-color 0.2s; background: rgba(0, 0, 0, 0.7);">
                         @if ($barrio->img && Storage::disk('public')->exists($barrio->img))
                             <img class="card-img" src="{{ url('storage/' . $barrio->img) }}" alt="{{ $barrio->title }}">
                         @else
@@ -132,19 +132,22 @@
                         @endif
                         <div class="card-body">
                             <h5 class="card-title" style="color: #c9e87b;">{{ $barrio->title }}</h5>
-                            <p class="card-text" style="color: #fff;">{{ Str::limit($barrio->body, 80, '...') }}</p> <!-- Aquí se hace el cambio -->
-                            <a href="{{ route('barrios.show', $barrio) }}" class="btn btn-primary">Ver Detalles</a>
+                            <p class="card-text" style="color: #fff;">{{ Str::limit($barrio->body, 180, '...') }}</p> <!-- Aquí se hace el cambio -->
+                            <div class="button-container d-flex justify-content-start align-items-center">
+                                <a href="{{ route('barrios.show', $barrio) }}" class="btn btn-primary">Ver Detalles</a>
+                                @if (auth()->check() && auth()->user()->admin == 1)
+                                    <form action="{{ route('barrios.delete', ['id' => $barrio->id]) }}" method="POST" class="ml-2">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger rounded-circle" style="width: 30px; height: 30px; padding: 0; line-height: 30px; text-align: center;">
+                                            <i class="bi bi-x"></i> <!-- Ícono de Bootstrap -->
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
                         </div>
             
-                        @if (auth()->check() && auth()->user()->admin == 1)
-                            <div class="text-center mb-2">
-                                <form action="{{ route('barrios.delete', ['id' => $barrio->id]) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Eliminar Barrio</button>
-                                </form>
-                            </div>
-                        @endif
+                      
                     </div>
                 </div>
             @endforeach
@@ -154,10 +157,32 @@
 </x-layout>
 
 <style>
-    .card-img {
-        width: 100%; /* Establece el ancho al 100% del contenedor de la tarjeta */
-        height: 200px; /* Altura fija para todas las imágenes */
-        object-fit: cover; /* Asegura que la imagen cubra completamente el área sin distorsionarse */
-    }
-</style>
+ 
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: auto; /* Ajusta según tus necesidades */
+        }
+
+        .card-body {
+            flex-grow: 1;
+    overflow: hidden; /* Oculta el contenido que excede el espacio */
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+
+.card-title, .card-text {
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es demasiado largo */
+}
+
+
+    </style>
 

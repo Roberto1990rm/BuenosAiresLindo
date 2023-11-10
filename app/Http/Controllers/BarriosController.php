@@ -22,10 +22,9 @@ class BarriosController extends Controller
 
 public function store(Request $request)
 {
-    dd($request->all()); 
     $request->validate([
         'title' => 'required|string',
-        'body' => 'required|string',
+        'body' => 'required|string|min:179',
         'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'latitude' => 'nullable|numeric',
         'longitude' => 'nullable|numeric',

@@ -1,6 +1,6 @@
 <x-layout>
-    <div class="container mt-4">
-        <h1>Crear Barrio</h1>
+    <div class="container mt-4" style="color: white;">
+        <h1 style="color: black">Crear Barrio</h1>
         <form method="POST" action="{{ route('barrios.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
@@ -10,25 +10,12 @@
             
             <div class="mb-3">
                 <label for="body" class="form-label">Descripción</label>
-                <textarea class="form-control" id="editor" name="body" rows="3" required></textarea>
-                <script>
-                    // Inicializar TinyMCE
-                    tinymce.init({
-                      selector: '#editor',
-                      // Agrega aquí otras opciones según necesites
-                    });
-                  
-                    document.getElementById('formBarrio').addEventListener('submit', function() {
-    tinymce.triggerSave();
-    console.log(document.getElementById('editor').value); // Debería mostrar el contenido del editor
-});
-;
-
-                    
-                  </script>
-                  
-                    
+                <textarea class="form-control @error('body') is-invalid @enderror" id="body" name="body" rows="3" minlength="179" required></textarea>
+                @error('body')
+                    <div style="font-size: 25px; color:azure;" class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
+            
             <div class="mb-3">
                 <label for="img" class="form-label">Imagen</label>
                 <input type="file" class="form-control" id="img" name="img">
