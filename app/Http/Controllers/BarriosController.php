@@ -95,6 +95,9 @@ public function index()
 
 
 
-
+public function show(Barrio $barrio)
+{
+    return view('barrios.show', compact('barrio'));
+}
 
 }

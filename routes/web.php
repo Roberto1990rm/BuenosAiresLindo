@@ -29,6 +29,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('we
 Route::get('/barrios/create', [BarriosController::class,'create'])->name('barrios.create');
 Route::post('/barrios/create/store', [BarriosController::class,'store'])->name('barrios.store');
 Route::get('/barrios/index', [BarriosController::class, 'index'])->name('barrios.index');
+Route::get('/barrios/{barrio}', [BarriosController::class, 'show'])->name('barrios.show');
 Route::delete('/barrios/{id}', [BarriosController::class, 'delete'])->name('barrios.delete');
 
 

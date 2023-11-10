@@ -91,7 +91,7 @@
                         <div class="card-body">
                             <h5 class="card-title" style="color: #fff;">{{ $barrio->title }}</h5>
                             <p class="card-text" style="color: #fff;">{{ Str::limit($barrio->body, 80, '...') }}</p> <!-- Aquí se hace el cambio -->
-                            <a href="#" class="btn btn-primary">Ver Detalles</a>
+                            <a href="{{ route('barrios.show', $barrio) }}" class="btn btn-primary">Ver Detalles</a>
                         </div>
             
                         @if (auth()->check() && auth()->user()->admin == 1)
