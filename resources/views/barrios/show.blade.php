@@ -5,23 +5,18 @@
         <div class="body-text">
             <p>{{ $barrio->body }}</p>
         </div>
-
         @if($barrio->latitude && $barrio->longitude)
             <div id="map"></div> <!-- Aquí iría el mapa -->
         @endif
-
+        <a href="{{ url('/') }}" class="btn btn-secondary mt-3 mb-3">Volver al Inicio</a>
         <!-- Sección de comentarios o reseñas aquí -->
 
     </div>
 
-    <script>
-        // Código JavaScript para inicializar el mapa
-    </script>
+ 
 
     <style>
-        #map {
-            height: 400px; /* O el tamaño que prefieras */
-        }
+       
         .title, .body-text {
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
