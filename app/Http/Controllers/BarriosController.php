@@ -23,22 +23,21 @@ class BarriosController extends Controller
 public function store(Request $request)
 {
     // Validar los datos del formulario
-    $validatedData = $request->validate([
+    $request->validate([
         'title' => 'required|string|max:255',
         'body' => 'required|string',
-        'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Valida y permite imágenes (ajusta los formatos y el tamaño según tus necesidades)
-        'latitude' => 'nullable|numeric', // Valida como número (ajusta las reglas según tus necesidades)
-        'longitude' => 'nullable|numeric', // Valida como número (ajusta las reglas según tus necesidades)
+        'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
     ]);
 
-    // Crear un nuevo Barrio con los datos validados, incluyendo las nuevas columnas
-    $barrio = new Barrio([
-        'title' => $validatedData['title'],
-        'body' => $validatedData['body'],
-        'img' => $request->file('img')->store('barrios', 'public'), // Almacena la imagen y ajusta la ubicación según tu configuración
-        'latitude' => $validatedData['latitude'],
-        'longitude' => $validatedData['longitude'],
-    ]);
+    // Crear una nueva instancia del modelo Barrio y asignar valores usando input()
+    $barrio = new Barrio();
+    $barrio->title = $request->input('title');
+    $barrio->body = $request->input('body');
+    $barrio->img = $request->hasFile('img') ? $request->file('img')->store('barrios', 'public') : null; // Verifica si hay archivo de imagen y lo almacena
+    $barrio->latitude = $request->input('latitude');
+    $barrio->longitude = $request->input('longitude');
 
     // Guardar el Barrio en la base de datos
     $barrio->save();
