@@ -1,6 +1,6 @@
 <x-layout>
     <div class="container text-center">
-        <h1 class="title">{{ $barrio->title }}</h1>
+        <h1 class="title" style="color: rgb(8, 67, 103)">{{ $barrio->title }}</h1>
         <img src="{{ asset('storage/' . $barrio->img) }}" alt="Imagen del Barrio" class="img-fluid">
         <div class="body-text">
             <p>{{ $barrio->body }}</p>
@@ -8,7 +8,7 @@
         @if($barrio->latitude && $barrio->longitude)
             <div id="map"></div> <!-- Aquí iría el mapa -->
         @endif
-        <a href="{{ url('/barrios/index') }}" class="btn btn-secondary mt-3 mb-3">Volver a barrios</a>
+        <a href="{{ url('/barrios/index') }}" class="btn btn-danger mt-3 mb-3">Volver a barrios</a>
         <!-- Sección de comentarios o reseñas aquí -->
 
     </div>
@@ -23,6 +23,7 @@
         }
         .body-text {
             margin: 0 auto;
+            text-align: justify;
             max-width: 800px; /* Ajusta según prefieras */
             max-height: 300px; /* Altura máxima para la caja de texto */
             overflow-y: scroll; /* Permite desplazamiento vertical */

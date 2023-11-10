@@ -79,9 +79,9 @@
                 
                         var showTooltip = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
                             overlay.setPosition(evt.coordinate);
-                            tooltip.innerHTML = feature.get('title') + '<br>' + feature.get('body') +
-                                                '<br><span style="text-decoration: underline; cursor: pointer;" onclick="window.open(\'/barrios/' + feature.get('id') + '\', \'_blank\');">para ver más clickea la estrella</span>';
-                            tooltip.style.display = 'block';
+                            tooltip.innerHTML = '<strong>' + feature.get('title') + '</strong><br>' + feature.get('body') +
+                                '<br><span style="text-decoration: underline; cursor: pointer;" onclick="window.open(\'/barrios/' + feature.get('id') + '\', \'_blank\');"></span>';
+            tooltip.style.display = 'block';
                             return true;
                         });
                 
@@ -126,12 +126,12 @@
                 <div class="col-md-4">
                     <div class="card w-100" style="cursor: pointer; transition: background-color 0.2s; background: rgba(0, 0, 0, 0.7);">
                         @if ($barrio->img && Storage::disk('public')->exists($barrio->img))
-                            <img style="height: auto;" src="{{ url('storage/' . $barrio->img) }}" class="card-img-top" alt="{{ $barrio->title }}">
+                            <img class="card-img" src="{{ url('storage/' . $barrio->img) }}" alt="{{ $barrio->title }}">
                         @else
-                            <img src="{{ asset('img/default.jpg') }}" class="card-img-top" alt="{{ $barrio->title }}">
+                            <img class="card-img" src="{{ asset('img/default.jpg') }}" alt="{{ $barrio->title }}">
                         @endif
                         <div class="card-body">
-                            <h5 class="card-title" style="color: #fff;">{{ $barrio->title }}</h5>
+                            <h5 class="card-title" style="color: #c9e87b;">{{ $barrio->title }}</h5>
                             <p class="card-text" style="color: #fff;">{{ Str::limit($barrio->body, 80, '...') }}</p> <!-- Aquí se hace el cambio -->
                             <a href="{{ route('barrios.show', $barrio) }}" class="btn btn-primary">Ver Detalles</a>
                         </div>
@@ -153,5 +153,11 @@
     </div>
 </x-layout>
 
-
+<style>
+    .card-img {
+        width: 100%; /* Establece el ancho al 100% del contenedor de la tarjeta */
+        height: 200px; /* Altura fija para todas las imágenes */
+        object-fit: cover; /* Asegura que la imagen cubra completamente el área sin distorsionarse */
+    }
+</style>
 
