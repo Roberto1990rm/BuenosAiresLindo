@@ -69,10 +69,12 @@
                             @endif
                         </div>
                         <div class="bar-details">
-                            <h5 class="bar-title text-center">{{ $bar->nombre }}</h5>
+                            <h5 class="bar-title text-center"  style="color:green;">{{ $bar->nombre }}</h5>
                             <p class="bar-description">{{ Str::limit($bar->descripcion, 179, '...') }}</p>
-
-                            <p><strong>Barrio:</strong> {{ $bar->barrio->title }}</p>
+                            <p>
+                                <span style="color: rgb(0, 123, 255);"><strong>Barrio:</strong></span> 
+                                <span style="color: white;">{{ $bar->barrio->title }}</span>
+                            </p>
                         </div>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="{{ route('bares.show', $bar->id) }}" class="btn btn-primary">Ver Detalles</a>

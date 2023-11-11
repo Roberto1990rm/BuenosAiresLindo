@@ -27,33 +27,43 @@
 
 
     <div class="container mb-3 w-75" style="text-align: center; font-family: 'Arial', 'Helvetica', sans-serif; color: #ffffff;  text-transform: uppercase; margin-bottom: 20px; letter-spacing: 2px; border: 0.2px solid #ffffff; ">
-       
         <div class="row">
             @foreach ($parques as $parque)
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2 mb-2">
                     <div class="parque-item" style="color: rgb(255, 255, 255); background: rgba(0, 0, 0, 0.7); border: 1px solid #e1e1e1; border-radius: 5px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: background 0.3s;">
-                        <img src="{{ asset('storage/' . $parque->imagen) }}" alt="{{ $parque->nombre }}" style="max-width: 100%;">
-                        <div class="parque-details">
-                            <h5 class="parque-title text-center">{{ $parque->nombre }}</h5>
-                            <p class="parque-description">{{ $parque->descripcion }}</p>
-                            <p><strong>Calle:</strong> {{ $parque->calle }}</p>
-                            <p><strong>Barrio:</strong> {{ $parque->barrio->title }}</p>
+                        <img src="{{ asset('storage/' . $parque->imagen) }}" alt="{{ $parque->nombre }}" style="max-width: 100%; height: 200px;">
+                        <div class="parque-details mt-2" style="padding: 15px; text-align: justify;">
+                            <h5 class="parque-title text-center" style="color:rgb(122, 239, 13);">{{ $parque->nombre }}</h5>
+                            <p style="font-size: 14px;">
+                                <span style="color: rgb(20, 132, 134);"><strong>Descripción:</strong></span> 
+                                <span style="color: white;">{{ strlen($parque->descripcion) > 179 ? substr($parque->descripcion, 0, 179) . '...' : $parque->descripcion }}</span>
+                            </p>
+                            <p>
+                                <span style="color: rgb(33, 150, 138);"><strong>Calle:</strong></span> 
+                                <span style="color: white;">{{ $parque->calle }}</span>
+                            </p>
+                            <p>
+                                <span style="color: rgb(18, 146, 144);"><strong>Barrio:</strong></span> 
+                                <span style="color: white;">{{ $parque->barrio->title }}</span>
+                            </p>
                         </div>
-
-                        <a href="{{ route('parque.show', $parque) }}" class="btn btn-primary">Ver Detalles</a>
-
-                        @if (auth()->check() && auth()->user() && auth()->user()->admin == 1)
-                        <form action="{{ route('parques.destroy', $parque->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Eliminar Parque</button>
-                        </form>
-                    @endif
-                    
+        
+                        <div class="parque-actions" style="padding: 0 15px 15px;">
+                            <a href="{{ route('parque.show', $parque) }}" class="btn btn-primary mb-2">Ver Detalles</a>
+        
+                            @if (auth()->check() && auth()->user() && auth()->user()->admin == 1)
+                                <form action="{{ route('parques.destroy', $parque->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Eliminar Parque</button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
                 </div>
             @endforeach
         </div>
+        
     </div>
 </x-layout>
 
