@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Barrio;
 use App\Models\Bar;
+use App\Models\Parque;
 use Illuminate\Support\Facades\Storage;
-
+use App\Http\Controllers\BaresController;
 
 
 
@@ -97,10 +98,15 @@ public function index()
 
 
 
-
-public function show(Barrio $barrio)
-{
-    return view('barrios.show', compact('barrio'));
+// En tu controlador
+public function show($id) {
+    $barrio = Barrio::find($id);
+    $bares = Bar::where('barrio_id', $id)->get(); // Asume que tienes un modelo Bar y una relación barrio_id
+    $parques = Parque::where('barrio_id', $id)->get();
+   
+    //dd($bares);
+    return view('barrios.show', compact('barrio', 'bares', 'parques'));
 }
+
 
 }

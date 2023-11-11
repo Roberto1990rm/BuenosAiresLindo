@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Controllers\BaresController;
 class Bar extends Model
 {
+    protected $table = 'bares';
 
     protected $fillable = ['nombre', 'direccion', 'descripcion', 'latitude', 'longitude','precios', 'horario', 'barrio_id','image1','image2','image3','image4',];
 
