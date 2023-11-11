@@ -64,6 +64,14 @@ public function index()
 }
 
 
+public function show($id)
+{
+    $bar = Bar::findOrFail($id);
+    return view('bares.show', compact('bar'));
+}
+
+
+
 public function destroy(Bar $bar)
 {
     // Verificar si el usuario tiene permisos de administrador
@@ -76,6 +84,9 @@ public function destroy(Bar $bar)
 
     return redirect()->route('bares.index')->with('success', 'Bar eliminado correctamente.');
 }
+
+
+
 
 
 }

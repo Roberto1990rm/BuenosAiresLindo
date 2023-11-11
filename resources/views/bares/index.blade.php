@@ -1,3 +1,5 @@
+@use Illuminate\Support\Str
+
 <x-layout>
     <div class="container">
         <h1 class="text-center mt-5 mb-4" style="text-align: center; font-family: 'Arial', 'Helvetica', sans-serif; color: #007BFF; font-size: 38px; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 2px; border: 0.2px solid #ffffff; ">Listado de Bares en Buenos Aires</h1>
@@ -68,12 +70,14 @@
                         </div>
                         <div class="bar-details">
                             <h5 class="bar-title text-center">{{ $bar->nombre }}</h5>
-                            <p class="bar-description">{{ $bar->descripcion }}</p>
-                            <p><strong>Dirección:</strong> {{ $bar->direccion }}</p>
+                            <p class="bar-description">{{ Str::limit($bar->descripcion, 179, '...') }}</p>
+
                             <p><strong>Barrio:</strong> {{ $bar->barrio->title }}</p>
-                            <p><strong>Precios:</strong> {{ $bar->precios }}</p>
-                            <p><strong>Horario:</strong> {{ $bar->horario }}</p>
                         </div>
+                        <div class="d-flex justify-content-center">
+                            <a href="{{ route('bares.show', $bar->id) }}" class="btn btn-primary mb-1">Ver Detalles</a>
+                        </div>
+                        
                         @if (auth()->check() && auth()->user()->admin == 1)
                         <div class="text-center">
                             <form action="{{ route('bares.destroy', $bar) }}" method="POST">

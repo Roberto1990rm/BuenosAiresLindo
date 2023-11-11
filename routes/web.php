@@ -39,6 +39,7 @@ Route::delete('/barrios/{id}', [BarriosController::class, 'delete'])->name('barr
 Route::get('/bares/create', [BaresController::class, 'create'])->name('bares.create');
 Route::post('/bares', [BaresController::class, 'store'])->name('bares.store');
 Route::get('/bares', [BaresController::class, 'index'])->name('bares.index');
+Route::get('/bares/{id}', [BaresController::class, 'show'])->name('bares.show');
 Route::delete('/bares/{bar}',[BaresController::class, 'destroy'])->name('bares.destroy')->middleware('auth');
 
 

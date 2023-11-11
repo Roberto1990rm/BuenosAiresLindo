@@ -67,13 +67,14 @@ public function delete($id)
         }
     }
 
-    // Eliminar la imagen principal y las imágenes adicionales
-    $imageFields = ['img', 'imagen2', 'imagen3', 'imagen4', 'imagen5'];
-    foreach ($imageFields as $fieldName) {
-        if (Storage::disk('public')->exists($barrio->$fieldName)) {
-            Storage::disk('public')->delete($barrio->$fieldName);
-        }
+// Eliminar la imagen principal y las imágenes adicionales
+$imageFields = ['img', 'imagen2', 'imagen3', 'imagen4', 'imagen5'];
+foreach ($imageFields as $fieldName) {
+    if ($barrio->$fieldName && Storage::disk('public')->exists($barrio->$fieldName)) {
+        Storage::disk('public')->delete($barrio->$fieldName);
     }
+}
+
 
     $barrio->delete();
     return redirect('/')->with('success', 'Barrio eliminado correctamente');
