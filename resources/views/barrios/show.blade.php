@@ -30,6 +30,7 @@
 
         @if($barrio->latitude && $barrio->longitude)
         <div id="map" style="width: 100%; height: 400px;"></div>
+        <script src="https://cdn.jsdelivr.net/npm/ol/ol.js"></script>
         <script>
             var bares = @json($bares);
             var parques = @json($parques);
@@ -60,7 +61,9 @@
                 var barFeature = new ol.Feature({
                     geometry: new ol.geom.Point(ol.proj.fromLonLat(barCoords)),
                     nombre: bar.nombre,
-                    direccion: bar.direccion
+                    direccion: bar.direccion,
+                    tipo: 'bar',
+                    id: bar.id // Asegúrate de que 'id' es un campo en tus datos de bares
                 });
         
                 var style = new ol.style.Style({
@@ -85,39 +88,39 @@
         
                 map.addLayer(markerVectorLayer);
             });
-
-
-
+        
+            // Añadir marcadores para cada parque
             parques.forEach(function(parque) {
-            var parqueCoords = [parseFloat(parque.longitude), parseFloat(parque.latitude)];
-            var parqueFeature = new ol.Feature({
-                geometry: new ol.geom.Point(ol.proj.fromLonLat(parqueCoords)),
-                nombre: parque.nombre,
-                calle: parque.calle
+                var parqueCoords = [parseFloat(parque.longitude), parseFloat(parque.latitude)];
+                var parqueFeature = new ol.Feature({
+                    geometry: new ol.geom.Point(ol.proj.fromLonLat(parqueCoords)),
+                    nombre: parque.nombre,
+                    calle: parque.calle,
+                    tipo: 'parque',
+                    id: parque.id // Asegúrate de que 'id' es un campo en tus datos de parques
+                });
+        
+                var style = new ol.style.Style({
+                    image: new ol.style.RegularShape({
+                        fill: new ol.style.Fill({ color: 'green' }),
+                        stroke: new ol.style.Stroke({ color: 'black', width: 1 }),
+                        points: 3,
+                        radius: 10,
+                        angle: Math.PI / 4
+                    })
+                });
+                parqueFeature.setStyle(style);
+        
+                var vectorSource = new ol.source.Vector({
+                    features: [parqueFeature]
+                });
+        
+                var markerVectorLayer = new ol.layer.Vector({
+                    source: vectorSource,
+                });
+        
+                map.addLayer(markerVectorLayer);
             });
-
-            var style = new ol.style.Style({
-                image: new ol.style.RegularShape({
-                    fill: new ol.style.Fill({ color: 'green' }),
-                    stroke: new ol.style.Stroke({ color: 'black', width: 1 }),
-                    points: 3,
-                    radius: 10,
-                    angle: Math.PI / 4
-                })
-            });
-            parqueFeature.setStyle(style);
-
-            var vectorSource = new ol.source.Vector({
-                features: [parqueFeature]
-            });
-
-            var markerVectorLayer = new ol.layer.Vector({
-                source: vectorSource,
-            });
-
-            map.addLayer(markerVectorLayer);
-        });
-
         
             // Mostrar tooltip al pasar el mouse sobre los marcadores
             map.on('pointermove', function(evt) {
@@ -135,10 +138,19 @@
                     tooltip.style.display = 'none';
                 }
             });
+        
+            // Manejar clics en los marcadores
+            map.on('singleclick', function(evt) {
+                map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+                    if (feature.get('tipo') === 'bar') {
+                        window.location.href = '/bares/' + feature.get('id'); // Asumiendo que tienes una ruta así
+                    } else if (feature.get('tipo') === 'parque') {
+                        window.location.href = '/parques/' + feature.get('id'); // Asumiendo que tienes una ruta así
+                    }
+                });
+            });
         </script>
-        
-        
-    @endif
+        @endif
 
         <!-- Botón de regreso con estilos .danger -->
         <a href="{{ url('/barrios/index') }}" class="btn mt-3 mb-3 danger">Volver a barrios</a>

@@ -40,6 +40,8 @@
                             <p><strong>Barrio:</strong> {{ $parque->barrio->title }}</p>
                         </div>
 
+                        <a href="{{ route('parque.show', $parque) }}" class="btn btn-primary">Ver Detalles</a>
+
                         @if (auth()->check() && auth()->user() && auth()->user()->admin == 1)
                         <form action="{{ route('parques.destroy', $parque->id) }}" method="POST">
                             @csrf

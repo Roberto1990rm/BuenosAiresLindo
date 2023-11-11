@@ -47,6 +47,7 @@ Route::delete('/bares/{bar}',[BaresController::class, 'destroy'])->name('bares.d
 Route::get('/parques/create', [ParqueController::class, 'create'])->name('parques.create');
 Route::post('/parques/store', [ParqueController::class, 'store'])->name('parques.store');
 Route::get('/parques/index', [ParqueController::class, 'index'])->name('parques.index');
+Route::get('/parques/{id}', [ParqueController::class, 'show'])->name('parque.show');
 Route::delete('/parques/{id}',[ParqueController::class, 'destroy'])->name('parques.destroy');
 
 
