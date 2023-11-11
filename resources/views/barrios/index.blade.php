@@ -126,7 +126,7 @@
                 <div class="col-md-4">
                     <div class="card w-100 mt-1" style="cursor: pointer; transition: background-color 0.2s; background: rgba(0, 0, 0, 0.7);">
                         @if ($barrio->img && Storage::disk('public')->exists($barrio->img))
-                            <img class="card-img" src="{{ url('storage/' . $barrio->img) }}" alt="{{ $barrio->title }}">
+                            <img style="height: 150px;" class="card-img" src="{{ url('storage/' . $barrio->img) }}" alt="{{ $barrio->title }}">
                         @else
                             <img class="card-img" src="{{ asset('img/default.jpg') }}" alt="{{ $barrio->title }}">
                         @endif

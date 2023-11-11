@@ -38,7 +38,7 @@
                             <div class="carousel-inner">
                                 @if ($bar->image1)
                                     <div class="carousel-item active">
-                                        <img src="{{ asset('storage/' . $bar->image1) }}" class="d-block mx-auto img-fluid" alt="{{ $bar->nombre }}">
+                                        <img style="height:150px; with: auto;" src="{{ asset('storage/' . $bar->image1) }}" class="d-block mx-auto img-fluid" alt="{{ $bar->nombre }}">
                                     </div>
                                 @endif
                                 @if ($bar->image2)
@@ -74,7 +74,7 @@
 
                             <p><strong>Barrio:</strong> {{ $bar->barrio->title }}</p>
                         </div>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center mb-2">
                             <a href="{{ route('bares.show', $bar->id) }}" class="btn btn-primary">Ver Detalles</a>
                         </div>
                         
