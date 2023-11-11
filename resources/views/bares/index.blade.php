@@ -1,4 +1,4 @@
-@use Illuminate\Support\Str
+
 
 <x-layout>
     <div class="container">
@@ -75,7 +75,7 @@
                             <p><strong>Barrio:</strong> {{ $bar->barrio->title }}</p>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <a href="{{ route('bares.show', $bar->id) }}" class="btn btn-primary mb-1">Ver Detalles</a>
+                            <a href="{{ route('bares.show', $bar->id) }}" class="btn btn-primary">Ver Detalles</a>
                         </div>
                         
                         @if (auth()->check() && auth()->user()->admin == 1)

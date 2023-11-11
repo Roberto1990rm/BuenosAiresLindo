@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Barrio;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Bar;
+use Illuminate\Support\Str;
 
 class BaresController extends Controller
 {

@@ -74,8 +74,6 @@ foreach ($imageFields as $fieldName) {
         Storage::disk('public')->delete($barrio->$fieldName);
     }
 }
-
-
     $barrio->delete();
     return redirect('/')->with('success', 'Barrio eliminado correctamente');
 }
