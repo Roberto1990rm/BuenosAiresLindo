@@ -30,7 +30,7 @@
         </div>
 
         <!-- Botón de regreso con estilos .danger -->
-        <a href="{{ url('/parques') }}" class="btn mt-3 mb-3 danger">Volver a Parques</a>
+        <a href="{{ url('/parques/index') }}" class="btn mt-3 mb-3 danger">Volver a Parques</a>
     </div>
 
     <!-- Estilos personalizados -->
